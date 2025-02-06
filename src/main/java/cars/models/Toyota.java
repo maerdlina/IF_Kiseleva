@@ -1,4 +1,5 @@
-package com.jts;
+package cars.models;
+import cars.Car;
 
 public class Toyota extends Car {
 
@@ -6,11 +7,9 @@ public class Toyota extends Car {
         super(year, transmission, modelName, number, companyName, fuelType, color);
     }
 
-    @Override
     public String getCarInfo() {
-        return String.format("Toyota %s", super.getAllInfo());
+        return String.format("%s", super.getAllInfo());
     }
-
 
     public boolean isEcoFriendly() {
         return "Petrol".equalsIgnoreCase(super.getFuelType());
