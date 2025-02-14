@@ -7,8 +7,8 @@ import java.util.List;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class JiraTask {
-    private final SelenideElement status =$x("//span[@id='status-val']/child::span");
-    private final SelenideElement version =$x("//span[@id='fixVersions-field']/child::a");
+    private final SelenideElement status =$x("//span[@id='status-val']/child::span").as("Детали задачи -> Статус");
+    private final SelenideElement version =$x("//span[@id='fixVersions-field']/child::a").as("Исправления в версиях");
 
     public List<String> statusCheck(){
         return List.of(status.getText().toUpperCase(), version.getText());

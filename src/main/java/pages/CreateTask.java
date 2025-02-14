@@ -6,38 +6,33 @@ import com.codeborne.selenide.SelenideElement;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class CreateTask {
-    private final SelenideElement createTask = $x("//a[@id='create_link']");
-    private final SelenideElement inputTheme = $x("//input[@id='summary']");
-//    private final SelenideElement inputDescription = $x("//textarea[@name='description']");
-    private final SelenideElement createButton = $x("//input[@value='Создать']");
-    private final SelenideElement checkTask = $x("//a[@class='issue-created-key issue-link']");
-    private final SelenideElement dropdownPriority = $x("//a[@class='order-options aui-button aui-style-default jira-aui-dropdown2-trigger']");
-    private final SelenideElement labelCheck = $x("//label[@class='item-label checkbox']");
-    private final SelenideElement lastTask = $x("//ol[@class='issue-list']/li[1]/a");
-    private final SelenideElement workButton = $x("//a[@id='action_id_21']");
-    private final SelenideElement actionInWork =$x("//a[@id='action_id_21']");
-    private final SelenideElement businessProcess =$x("//a[@id='opsbar-transitions_more']");
-    private final SelenideElement workDone =$x("//span[text()='Выполнено']/parent::a[@role='menuitem']");
+    private final SelenideElement createTask = $x("//a[@id='create_link']").as("Создание задачи");
+    private final SelenideElement inputTheme = $x("//input[@id='summary']").as("Заполнение темы");
+    private final SelenideElement createButton = $x("//input[@value='Создать']").as("Кнопка создания внутри формы задачи");
+    private final SelenideElement checkTask = $x("//a[@class='issue-created-key issue-link']").as("Созданная задача");
+    private final SelenideElement dropdownPriority = $x("//a[@class='order-options aui-button aui-style-default jira-aui-dropdown2-trigger']").as("Выпадающий список сортировки");
+    private final SelenideElement labelCheck = $x("//label[@class='item-label checkbox']").as("Пункты выпадающего списка");
+    private final SelenideElement lastTask = $x("//ol[@class='issue-list']/li[1]/a").as("Последняя задача");
+    private final SelenideElement workButton = $x("//a[@id='action_id_21']").as("Смена статуса : в работе");
+    private final SelenideElement actionInWork =$x("//a[@id='action_id_21']").as("Смена статуса");
+    private final SelenideElement businessProcess =$x("//a[@id='opsbar-transitions_more']").as("Бизнес-процесс выпадающий список");
+    private final SelenideElement workDone =$x("//span[text()='Выполнено']/parent::a[@role='menuitem']").as("Статус выполнено");
 
 
     public void createTask(String taskTheme, String description) {
         createTask.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
         inputTheme.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(taskTheme);
 
-        // Ожидание появления iFrame и переключение в него
         SelenideElement iframe = $x("//iframe[@id='mce_0_ifr']")
                 .shouldBe(Condition.visible, Duration.ofSeconds(10));
         Selenide.switchTo().frame(iframe);
 
-        // Взаимодействие с полем описания внутри iFrame
         SelenideElement iframeTextarea = $x("//body[@id='tinymce']");
         iframeTextarea.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(description);
 
-        // Возвращаемся в основной контент
         Selenide.switchTo().defaultContent();
 
         createButton.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
