@@ -37,6 +37,8 @@ public class CreateTask {
 
         createButton.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
         checkTask.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        lastTask.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        Selenide.refresh();
     }
 
 

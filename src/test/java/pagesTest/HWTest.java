@@ -1,7 +1,6 @@
 package pagesTest;
 
 import com.codeborne.selenide.Config;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.*;
 import pages.*;
 import webHooks.WebHooks;
@@ -63,8 +62,7 @@ public class HWTest extends WebHooks {
         authPage.login(login, password);
         testPage.projectPage();
         startNumTask = testPage.countTask();
-        createJiraTask.createTask("Bug","New Bug" );
-        Selenide.refresh();
+        createJiraTask.createTask("BugBug","New Bug2" );
         endNumTask = testPage.countTask();
         Assertions.assertEquals(startNumTask, endNumTask-1);
     }
