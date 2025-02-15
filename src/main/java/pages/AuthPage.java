@@ -11,10 +11,8 @@ public class AuthPage {
     private final SelenideElement loginButton = $x("//input[@name='login']").as("Кнопка войти");
 
     public void login(String log, String pass){
-        inputName.shouldBe(Condition.visible);
-        inputPassword.shouldBe(Condition.visible);
-        inputName.setValue(log);
-        inputPassword.setValue(pass);
+        inputName.shouldBe(Condition.visible).setValue(log);
+        inputPassword.shouldBe(Condition.visible).setValue(pass);
         loginButton.click();
     }
 }
