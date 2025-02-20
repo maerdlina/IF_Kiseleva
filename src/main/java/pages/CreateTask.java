@@ -19,27 +19,20 @@ public class CreateTask {
     private final SelenideElement workButton = $x("//a[@id='action_id_21']").as("Смена статуса задачи");
     private final SelenideElement businessProcess =$x("//a[@id='opsbar-transitions_more']").as("Бизнес-процесс выпадающий список");
     private final SelenideElement workDone =$x("//span[text()='Выполнено']/parent::a[@role='menuitem']").as("Статус выполнено");
-    SelenideElement iframe = $x("//iframe[@id='mce_0_ifr']").as("iFrame описания ошибки");
-    SelenideElement iframeTextarea = $x("//body[@id='tinymce']").as("Textarea куда записывается описнаие ошибки");
-    SelenideElement issueTypeField = $x("//input[@id='issuetype-field']").as("Поле выбора типа задачи");
+    private final SelenideElement iframe = $x("//iframe[@id='mce_0_ifr']").as("iFrame описания ошибки");
+    private final SelenideElement iframeTextarea = $x("//body[@id='tinymce']").as("Textarea куда записывается описнаие ошибки");
+    private final SelenideElement issueTypeField = $x("//input[@id='issuetype-field']").as("Поле выбора типа задачи");
 
     public void createTask(String taskTheme, String description) {
         createTask.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
-
         issueTypeField.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
-
         inputTheme.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(taskTheme);
-
         Selenide.switchTo().frame(iframe);
         iframeTextarea.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(description);
-
         Selenide.switchTo().defaultContent();
-
         createButton.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
-
         checkTask.shouldBe(Condition.visible, Duration.ofSeconds(10));
         lastTask.shouldBe(Condition.visible, Duration.ofSeconds(10));
-
         Selenide.refresh();
     }
 

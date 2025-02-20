@@ -2,29 +2,15 @@ package steps;
 
 import com.codeborne.selenide.Config;
 
+import config.PropertyConfiguration;
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.И;
 import org.junit.jupiter.api.Assertions;
 import pages.*;
 
-import java.io.InputStream;
 import java.util.List;
-import java.util.Properties;
 
 public class TestStep {
-
-    private static final Properties props = new Properties();
-
-    static {
-        try (InputStream input = Config.class.getResourceAsStream("/config.properties")) {
-            props.load(input);
-        } catch (Exception e) {
-            throw new RuntimeException("Error loading config", e);
-        }
-    }
-
-    private final String login = props.getProperty("login");
-    private final String password =  props.getProperty("password");
     private final JiraTask jiraTask = new JiraTask();
     private final CreateTask createJiraTask = new CreateTask();
 
@@ -35,7 +21,7 @@ public class TestStep {
 
     @И("авторизоваться в Jira")
     public void loginInJira() {
-        authPage.login(login, password);
+        authPage.login(PropertyConfiguration.get("login"), PropertyConfiguration.get("password"));
         Assertions.assertTrue(ChecksTask.isUserProfileDisplayed(), "User profile is not displayed after login");
     }
 
