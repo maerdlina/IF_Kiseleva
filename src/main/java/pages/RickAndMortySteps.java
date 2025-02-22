@@ -1,5 +1,6 @@
 package pages;
 
+import config.PropertyConfiguration;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 
@@ -18,7 +19,7 @@ public class RickAndMortySteps {
     public void characterSearch(String baseUri, int status){
         Response characterResponse = given()
                 .baseUri(baseUri)
-                .queryParam("name", "Morty Smith")
+                .queryParam("name", PropertyConfiguration.get("searchCharacterByRickAndMorty"))
                 .when()
                 .get("/character")
                 .then()
