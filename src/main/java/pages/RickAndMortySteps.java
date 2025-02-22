@@ -6,6 +6,15 @@ import org.junit.jupiter.api.Assertions;
 import static io.restassured.RestAssured.given;
 
 public class RickAndMortySteps {
+    public Response getShortResponce(String get, int statusCode) {
+        Response responce = given()
+                .get(get)
+                .then()
+                .statusCode(statusCode)
+                .extract().response();
+        return responce;
+    }
+
     public void characterSearch(String baseUri, int status){
         Response characterResponse = given()
                 .baseUri(baseUri)
@@ -15,26 +24,17 @@ public class RickAndMortySteps {
                 .then()
                 .statusCode(status)
                 .extract().response();
-        String lastEpisode = characterResponse.jsonPath().getString("results[0].episode[-1]");
 
-        Response lastEpisodeResponse = given()
-                .get(lastEpisode)
-                .then()
-                .statusCode(status)
-                .extract().response();
+        String lastEpisode = characterResponse.jsonPath().getString("results[0].episode[-1]");
+        Response lastEpisodeResponse = getShortResponce(lastEpisode, status);
 
         String lastCharacter = lastEpisodeResponse.jsonPath().getString("characters[-1]");
-
-        Response lastCharacterResponse = given()
-                .get(lastCharacter)
-                .then()
-                .statusCode(status)
-                .extract().response();
+        Response lastCharacterResponse = getShortResponce(lastCharacter, status);
 
         String lastCharacterLocation = lastCharacterResponse.jsonPath().getString("location.name");
         String lastCharacterRace = lastCharacterResponse.jsonPath().getString("species");
 
-        Assertions.assertFalse(Boolean.parseBoolean(lastCharacterLocation), characterResponse.jsonPath().getString("result[0].location.name"));
-        Assertions.assertFalse(Boolean.parseBoolean(lastCharacterRace), characterResponse.jsonPath().getString("result[0].species"));
+        Assertions.assertNotEquals(lastCharacterLocation, characterResponse.jsonPath().getString("results[0].location.name"));
+        Assertions.assertEquals(lastCharacterRace, characterResponse.jsonPath().getString("results[0].species"));
     }
 }
