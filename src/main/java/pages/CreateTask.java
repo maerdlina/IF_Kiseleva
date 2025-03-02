@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import java.time.Duration;
 
@@ -23,25 +24,21 @@ public class CreateTask {
     private final SelenideElement iframe = $x("//iframe[@id='mce_0_ifr']").as("Фрейм описания");
     private final SelenideElement iframeTextarea = $x("//body[@id='tinymce']").as("Поле ввода описания");
 
-
+    @Step("Wait for sing up")
     public void createTask(String taskTheme, String description) {
         createTask.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
         inputTheme.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(taskTheme);
-
         iframe.shouldBe(Condition.visible, Duration.ofSeconds(10));
         Selenide.switchTo().frame(iframe);
-
         iframeTextarea.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(description);
-
         Selenide.switchTo().defaultContent();
-
         createButton.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
         checkTask.shouldBe(Condition.visible, Duration.ofSeconds(10));
         lastTask.shouldBe(Condition.visible, Duration.ofSeconds(10));
         Selenide.refresh();
     }
 
-
+    @Step("Change Status")
     public void statusChange(){
         dropdownPriority.click();
         labelCheck.click();

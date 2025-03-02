@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -10,16 +11,19 @@ public class TestPage {
     private final SelenideElement searchInput = $x("//input[@id='quickSearchInput']").as("Строка поиска сверху");
     private final SelenideElement tasksCount = $x("//div[@class='showing']/child::span").as("Кол-во задач");
 
+    @Step("Open project page")
     public void projectPage(){
         projButton.click();
         icoTest.click();
     }
 
+    @Step("Search Text")
     public void searchText(String text){
         searchInput.sendKeys(text);
         searchInput.pressEnter();
     }
 
+    @Step("Count Task")
     public int countTask(){
         String countTaskText = tasksCount.getText();
         return Integer.parseInt(countTaskText.split(" ")[2]);

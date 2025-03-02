@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Properties;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;

@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class JiraTask {
     private final SelenideElement status =$x("//span[@id='status-val']/child::span").as("Детали задачи -> Статус");
     private final SelenideElement version =$x("//span[@id='fixVersions-field']/child::a").as("Исправления в версиях");
 
+    @Step("List of status & text")
     public List<String> statusCheck(){
         return List.of(status.getText().toUpperCase(), version.getText());
     }
