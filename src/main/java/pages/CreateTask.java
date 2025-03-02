@@ -20,17 +20,17 @@ public class CreateTask {
     private final SelenideElement actionInWork =$x("//a[@id='action_id_21']").as("Смена статуса");
     private final SelenideElement businessProcess =$x("//a[@id='opsbar-transitions_more']").as("Бизнес-процесс выпадающий список");
     private final SelenideElement workDone =$x("//span[text()='Выполнено']/parent::a[@role='menuitem']").as("Статус выполнено");
+    private final SelenideElement iframe = $x("//iframe[@id='mce_0_ifr']").as("Фрейм описания");
+    private final SelenideElement iframeTextarea = $x("//body[@id='tinymce']").as("Поле ввода описания");
 
 
     public void createTask(String taskTheme, String description) {
         createTask.shouldBe(Condition.visible, Duration.ofSeconds(10)).click();
         inputTheme.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(taskTheme);
 
-        SelenideElement iframe = $x("//iframe[@id='mce_0_ifr']")
-                .shouldBe(Condition.visible, Duration.ofSeconds(10));
+        iframe.shouldBe(Condition.visible, Duration.ofSeconds(10));
         Selenide.switchTo().frame(iframe);
 
-        SelenideElement iframeTextarea = $x("//body[@id='tinymce']");
         iframeTextarea.shouldBe(Condition.visible, Duration.ofSeconds(10)).setValue(description);
 
         Selenide.switchTo().defaultContent();
