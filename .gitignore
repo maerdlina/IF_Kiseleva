@@ -1,4 +1,8 @@
-*
+/.allure/
+/.idea/
+/build/
+/target/
+/IF_Kiseleva.iml
 
 !/src/
 !/pom.xml

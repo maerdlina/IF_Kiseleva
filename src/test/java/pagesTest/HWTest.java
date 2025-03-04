@@ -1,28 +1,13 @@
 package pagesTest;
 
-import com.codeborne.selenide.Config;
+import config.PropertyConfiguration;
 import org.junit.jupiter.api.*;
 import pages.*;
 import webHooks.WebHooks;
 
-import java.io.InputStream;
 import java.util.List;
-import java.util.Properties;
-
 
 public class HWTest extends WebHooks {
-    private static final Properties props = new Properties();
-
-    static {
-        try (InputStream input = Config.class.getResourceAsStream("/config.properties")){
-            props.load(input);
-        } catch (Exception e){
-            throw new RuntimeException("Error loading config", e);
-        }
-    }
-
-    private final String login = props.getProperty("login");
-    private final String password =  props.getProperty("password");
     private int startNumTask, endNumTask;
 
     private final AuthPage authPage = new AuthPage();
@@ -33,14 +18,14 @@ public class HWTest extends WebHooks {
     @DisplayName("Authentification check")
     @Test
     public void loginTest(){
-        authPage.login(login, password);
+        authPage.login(PropertyConfiguration.get("login"), PropertyConfiguration.get("password"));
         Assertions.assertTrue(ChecksTask.isUserProfileDisplayed());
     }
 
     @DisplayName("Tasks Check")
     @Test
     public void projectPageTest(){
-        authPage.login(login, password);
+        authPage.login(PropertyConfiguration.get("login"), PropertyConfiguration.get("password"));
         testPage.projectPage();
         Assertions.assertTrue(ChecksTask.isTitleExist("Открытые задачи"));
     }
@@ -48,7 +33,7 @@ public class HWTest extends WebHooks {
     @DisplayName("Check fields by task TestSeleniumATHomework")
     @Test
     public void taskTestSelenium(){
-        authPage.login(login, password);
+        authPage.login(PropertyConfiguration.get("login"), PropertyConfiguration.get("password"));
         ChecksTask.waitSignIn();
         testPage.searchText("TestSeleniumATHomework");
         List<String> status = jiraTask.statusCheck();
@@ -59,7 +44,7 @@ public class HWTest extends WebHooks {
     @DisplayName("Create new bug")
     @Test
     public void CreateJiraTask(){
-        authPage.login(login, password);
+        authPage.login(PropertyConfiguration.get("login"), PropertyConfiguration.get("password"));
         testPage.projectPage();
         startNumTask = testPage.countTask();
         createJiraTask.createTask("BugBug","New Bug2" );
@@ -70,7 +55,7 @@ public class HWTest extends WebHooks {
     @DisplayName("Change status")
     @Test
     public void ChangeStatus(){
-        authPage.login(login, password);
+        authPage.login(PropertyConfiguration.get("login"), PropertyConfiguration.get("password"));
         testPage.projectPage();
         createJiraTask.statusChange();
     }
