@@ -7,10 +7,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import io.qameta.allure.Step;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-public class ReqresSteps {
+public class ReqRes {
+    @Step("Создание пользователя")
     public void createResponce(String baseUri, String postUri, int statusCode) throws IOException {
         JSONObject body = new JSONObject(new String(Files.readAllBytes(Paths.get(PropertyConfiguration.get("urlToJson")))));
 

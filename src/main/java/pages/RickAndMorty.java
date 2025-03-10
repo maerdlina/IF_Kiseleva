@@ -1,12 +1,14 @@
 package pages;
 
 import config.PropertyConfiguration;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 
 import static io.restassured.RestAssured.given;
 
-public class RickAndMortySteps {
+public class RickAndMorty {
+    @Step("Получение response")
     public Response getShortResponce(String get, int statusCode) {
         Response responce = given()
                 .get(get)
@@ -16,6 +18,7 @@ public class RickAndMortySteps {
         return responce;
     }
 
+    @Step("Сравнение персонажей")
     public void characterSearch(String baseUri, int status){
         Response characterResponse = given()
                 .baseUri(baseUri)

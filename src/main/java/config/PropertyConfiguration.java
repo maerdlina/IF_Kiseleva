@@ -1,5 +1,7 @@
 package config;
 
+import io.qameta.allure.Allure;
+
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -16,6 +18,13 @@ public class PropertyConfiguration {
         }
     }
     public static String get(String key) {
-        return props.getProperty(key);
+        String value = props.getProperty(key);
+        if (value == null) {
+            Allure.addAttachment("CONFIG ERROR", "text/plain",
+                    "Отсутствует ключ: " + key + "\nДоступные ключи: " + props.keySet());
+            throw new RuntimeException("Не найден ключ: " + key);
+        }
+        return value;
     }
+
 }
