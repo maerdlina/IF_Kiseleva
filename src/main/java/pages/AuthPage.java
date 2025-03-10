@@ -11,12 +11,22 @@ public class AuthPage {
     private final SelenideElement inputPassword = $x("//input[@name='os_password']").as("Ввод пароля");
     private final SelenideElement loginButton = $x("//input[@name='login']").as("Кнопка войти");
 
-    @Step("Login")
-    public void login(String log, String pass){
+    @Step("Ввод логина: {log}")
+    public void enterLogin(String log) {
+        inputName.setValue(log);
+    }
+
+    @Step("Ввод пароля: {pass}")
+    public void enterPassword(String pass) {
+        inputPassword.setValue(pass);
+    }
+
+    public void login(String log, String pass) {
         inputName.shouldBe(Condition.visible);
         inputPassword.shouldBe(Condition.visible);
-        inputName.setValue(log);
-        inputPassword.setValue(pass);
+        enterLogin(log);
+        enterPassword(pass);
         loginButton.click();
     }
+
 }
